@@ -1,19 +1,21 @@
-# Makefile for shell++
+# Makefile for SHELL++
 # Author: Vugar Ahadli (Vuq17)
 # Date: 2026-02-11
 
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -Wpedantic -O2
+CXXFLAGS := -std=c++17 -Wall -Wextra -Wpedantic -O2 -Iinclude
+
+# Directories
+SRC_DIR := src
+BIN_DIR := binaries
 
 # Target executable
 TARGET := shell++
 
-# Source files
-SRCS := main.cpp tokenizer.cpp builtins.cpp
-
-# Object files
-OBJS := $(SRCS:.cpp=.o)
+# Source and object files
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BIN_DIR)/%.o,$(SRCS))
 
 # Default target
 all: $(TARGET)
@@ -22,13 +24,17 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Compile .cpp files to .o
-%.o: %.cpp
+# Compile source files into object files in binaries/
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Ensure binaries directory exists
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
 # Clean build artefacts
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf $(BIN_DIR)/*.o $(TARGET)
 
 # Run the shell directly
 run: $(TARGET)

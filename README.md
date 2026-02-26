@@ -26,4 +26,4 @@ make
 
 The project uses the BSD 3-Clause license in order to encourage free and open-source software.
 
-See `/LICENSE`.
+See [LICENSE](LICENSE).

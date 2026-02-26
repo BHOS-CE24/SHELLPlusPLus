@@ -40,3 +40,6 @@ int main() {
 
     return 0;
 }
+
+// # Author: Vugar Ahadli (Vuq17)
+// # Date: 2026-02-11
